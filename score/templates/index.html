@@ -1,30 +1,48 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>Hello, world!</h1>
-<form method="post" action="{% url 'index' %}">
-{% csrf_token %}
-<table class="table table-bordered table-light">
-<tr><th>Name</th><th>Score</th><th>Action</th></tr>
-{% if not form.instance.id %}
-<tr>
-  {% include 'save.html' %}
-</tr>
-{% endif %}
-{% for score in scores %}
-  <tr>
-    {% if form.instance.id == score.id %}
-    {% include 'save.html' %}
-    {% else %}
-    <td>{{ score.name }}</td>
-    <td>{{ score.value }}</td>
-    <td>
-      <button formnovalidate class="btn btn-success" name="edit" value="{{ score.id }}">Edit</button>
-      <button formnovalidate class="btn btn-danger" name="delete" value="{{ score.id }}">Delete</button>
-    </td>
-    {% endif %}
-  </tr>
-{% endfor %}
-</table>
-</form>
-<a href="{% url 'about' %}">About page</a>
+<div class="container">
+    <h1><i class="fas fa-users"></i> Manage Student Scores</h1>
+    
+<!-- Card for adding/editing a score -->
+<div class="card mb-4 d-flex justify-content-between">
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }} <!-- Render the form fields -->
+            <button type="submit" class="btn btn-primary" name="save">Save</button>
+        </form>
+    </div>
+</div>
+
+    
+    <!-- Cards displaying existing scores -->
+    <div class="row">
+        {% for score in scores %}
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body d-flex flex-row justify-content-between">
+                        <div class="d-flex flex-column">
+                            <h5 class="card-title">{{ score.name }}</h5>
+                            <p class="card-text"><strong>Score:</strong> {{ score.value }}</p>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <!-- Edit button -->
+                            <form method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-success me-2" name="edit" value="{{ score.id }}"><i class="far fa-edit me-1"></i> Edit</button>
+                                <button type="submit" class="btn btn-danger" name="delete" value="{{ score.id }}"><i class="fas fa-trash-alt me-1"></i> Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    
+    <!-- "Go Home" button -->
+    <form method="get" action="{% url 'view_data' %}">
+        <button type="submit" class="btn btn-primary"><i class="fas fa-user-plus me-1"></i> Go Home</button>
+    </form>
+</div>
 {% endblock %}
+

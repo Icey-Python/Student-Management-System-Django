@@ -1,0 +1,46 @@
+<!-- view_data.html -->
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Data</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{%static 'styles.css'%}">
+    <!-- Include Font Awesome CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+  <style>
+.card{
+  width:300px;
+}
+  </style>
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+          <h1 class="mt-5 mb-4"><i class="fas fa-list"></i> View Data</h1>
+        <a href="{% url 'index' %}" class="btn btn-primary"><i class="fas fa-users"></i>Manage Scores</a>
+        </div>
+        <div class="row">
+            {% for score in scores %}
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <i class="fas fa-user icon user"></i>
+                            <div>
+                                <h5 class="card-title">{{ score.name }}</h5>
+                                <p class="card-text">Score Value: {{ score.value }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <!-- Include Bootstrap JS (for optional features like dropdowns, modals, etc.) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+

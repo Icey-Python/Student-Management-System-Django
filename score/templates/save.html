@@ -1,4 +1,12 @@
+<!-- save.html -->
+
 {% for field in form %}
-  <td>{{ field }}</td>
+<div class="form-group mb-3">
+    {{ field.label_tag }}
+    {{ field }}
+</div>
 {% endfor %}
-<td><button class="btn btn-primary" name="save" value="{{ score.id }}">Save</button></td>
+<div class="form-group mb-3">
+    <button class="btn btn-primary" name="save" value="{{ score.id }}"><i class="far fa-save"></i> Save</button>
+</div>
+
